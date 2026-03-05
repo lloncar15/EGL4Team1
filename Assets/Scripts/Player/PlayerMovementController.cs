@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovementController : MonoBehaviour {
@@ -9,10 +8,8 @@ public class PlayerMovementController : MonoBehaviour {
 
     [Header("References")] 
     [SerializeField] private TrailRenderer dashTrail;
-
     [SerializeField] private SpriteRenderer spriteRenderer;
 
-    private PlayerInputActions _inputActions;
     private Vector2 _moveInput;
 
     private Rigidbody _rb;
@@ -25,20 +22,17 @@ public class PlayerMovementController : MonoBehaviour {
 
     private void Awake() {
         _rb = GetComponent<Rigidbody>();
-        _inputActions = new PlayerInputActions();
         
         _waitDashDuration = new WaitForSeconds(settings.dashDuration);
         _waitDashCooldown = new WaitForSeconds(settings.dashCooldown - settings.dashDuration);
     }
 
     private void OnEnable() {
-        _inputActions.Player.Enable();
-        _inputActions.Player.Dash.performed += OnDash;
+        InputController.OnDash += OnDash;
     }
 
     private void OnDisable() {
-        _inputActions.Player.Dash.performed -= OnDash;
-        _inputActions.Player.Disable();
+        InputController.OnDash -= OnDash;
     }
 
     private void Update() {
@@ -57,7 +51,7 @@ public class PlayerMovementController : MonoBehaviour {
     #region Movement
 
     private void UpdateMovement() {
-        _moveInput = _inputActions.Player.Move.ReadValue<Vector2>();
+        _moveInput = InputController.Instance.MoveInput;
 
         if (_moveInput.sqrMagnitude > 0.01f)
             _lastMoveDirection = _moveInput.normalized;
@@ -67,7 +61,7 @@ public class PlayerMovementController : MonoBehaviour {
     
     #region Dash
 
-    private void OnDash(InputAction.CallbackContext ctx) {
+    private void OnDash() {
         if (_isDashing || _dashOnCooldown)
             return;
 
