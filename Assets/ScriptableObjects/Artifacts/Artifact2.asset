@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2096a9bbb564982ab1deb5a66bc2be2, type: 3}
+  m_Name: Artifact2
+  m_EditorClassIdentifier: Assembly-CSharp::Artifact
+  itemName: Artifact 2
+  icon: {fileID: -1004935384, guid: 91b8a53ab6d654b7683ee0a5a1f789d6, type: 3}
+  itemDescription: 
+  appeal: 0
+  someStat: 0
+  someStat2: 0

@@ -8,6 +8,10 @@ public class InputController : PersistentSingleton<InputController> {
     public Vector2 MoveInput {get; private set;}
 
     public static event Action OnDash;
+    public static event Action OnInteract;
+    public static event Action<int> OnItemSelected;
+    
+    private Action<InputAction.CallbackContext>[] _slotCallbacks;
     
     protected override void Awake() {
         _inputActions = new PlayerInputActions();
@@ -19,20 +23,54 @@ public class InputController : PersistentSingleton<InputController> {
         _inputActions.UI.Enable();
         _inputActions.Player.Enable();
 
+        _inputActions.Player.Interact.performed += OnInteractPerformed;
         _inputActions.Player.Dash.performed += OnDashPerformed;
+        
+        var slotActions = new[] {
+            _inputActions.Player.SelectSlot1,
+            _inputActions.Player.SelectSlot2,
+            _inputActions.Player.SelectSlot3,
+            _inputActions.Player.SelectSlot4,
+            _inputActions.Player.SelectSlot5,
+            _inputActions.Player.SelectSlot6,
+        };
+
+        _slotCallbacks = new Action<InputAction.CallbackContext>[slotActions.Length];
+        for (int i = 0; i < slotActions.Length; i++) {
+            int slot = i;
+            _slotCallbacks[i] = _ => OnItemSelected?.Invoke(slot);
+            slotActions[i].performed += _slotCallbacks[i];
+        }
     }
 
     private void OnDisable() {
         if (_inputActions == null) 
             return;
         
+        _inputActions.Player.Interact.performed -= OnInteractPerformed;
         _inputActions.Player.Dash.performed -= OnDashPerformed;
+        
+        var slotActions = new[] {
+            _inputActions.Player.SelectSlot1,
+            _inputActions.Player.SelectSlot2,
+            _inputActions.Player.SelectSlot3,
+            _inputActions.Player.SelectSlot4,
+            _inputActions.Player.SelectSlot5,
+            _inputActions.Player.SelectSlot6,
+        };
+
+        for (int i = 0; i < slotActions.Length; i++)
+            slotActions[i].performed -= _slotCallbacks[i];
         
         _inputActions.Disable();
     }
 
     private void Update() {
         ReadMoveInputs();
+    }
+
+    private void OnInteractPerformed(InputAction.CallbackContext ctx) {
+        OnInteract?.Invoke();
     }
     
     private void OnDashPerformed(InputAction.CallbackContext ctx) {
