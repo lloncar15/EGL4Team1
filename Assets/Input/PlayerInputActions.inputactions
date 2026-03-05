@@ -104,6 +104,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Mode",
+                    "type": "Button",
+                    "id": "71d8afb5-201c-4020-a66d-10f7a6aecfee",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -423,6 +432,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SelectSlot6",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "90169c79-aac6-491b-a586-f18eaf1ec137",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

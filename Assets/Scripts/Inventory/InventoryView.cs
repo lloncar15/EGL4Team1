@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class InventoryView : MonoBehaviour {
@@ -11,12 +12,14 @@ public class InventoryView : MonoBehaviour {
         InventorySystem.OnItemAdded += AddItem;
         InventorySystem.OnItemRemoved += RemoveItem;
         InventorySystem.UpdateItems += UpdateItems;
+        GameStateController.MuseumOpened += OnMuseumOpened;
     }
 
     private void OnDisable() {
         InventorySystem.OnItemAdded -= AddItem;
         InventorySystem.OnItemRemoved -= RemoveItem;
         InventorySystem.UpdateItems -= UpdateItems;
+        GameStateController.MuseumOpened -= OnMuseumOpened;
     }
 
     private void UpdateItems() {
@@ -38,5 +41,13 @@ public class InventoryView : MonoBehaviour {
         InventoryItemView view = itemViews[itemIndex];
         itemViews.RemoveAt(itemIndex);
         Destroy(view.gameObject);
+    }
+
+    private void OnMuseumOpened() {
+        transform.DOScale(Vector3.zero, 0.5f)
+            .SetEase(Ease.InBack)
+            .OnComplete(() => {
+                gameObject.SetActive(false);
+            });
     }
 }

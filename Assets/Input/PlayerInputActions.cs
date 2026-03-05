@@ -190,6 +190,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Mode"",
+                    ""type"": ""Button"",
+                    ""id"": ""71d8afb5-201c-4020-a66d-10f7a6aecfee"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -509,6 +518,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SelectSlot6"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""90169c79-aac6-491b-a586-f18eaf1ec137"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1107,6 +1127,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_SelectSlot4 = m_Player.FindAction("SelectSlot4", throwIfNotFound: true);
         m_Player_SelectSlot5 = m_Player.FindAction("SelectSlot5", throwIfNotFound: true);
         m_Player_SelectSlot6 = m_Player.FindAction("SelectSlot6", throwIfNotFound: true);
+        m_Player_Mode = m_Player.FindAction("Mode", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1211,6 +1232,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SelectSlot4;
     private readonly InputAction m_Player_SelectSlot5;
     private readonly InputAction m_Player_SelectSlot6;
+    private readonly InputAction m_Player_Mode;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1266,6 +1288,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/SelectSlot6".
         /// </summary>
         public InputAction @SelectSlot6 => m_Wrapper.m_Player_SelectSlot6;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Mode".
+        /// </summary>
+        public InputAction @Mode => m_Wrapper.m_Player_Mode;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1325,6 +1351,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @SelectSlot6.started += instance.OnSelectSlot6;
             @SelectSlot6.performed += instance.OnSelectSlot6;
             @SelectSlot6.canceled += instance.OnSelectSlot6;
+            @Mode.started += instance.OnMode;
+            @Mode.performed += instance.OnMode;
+            @Mode.canceled += instance.OnMode;
         }
 
         /// <summary>
@@ -1369,6 +1398,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @SelectSlot6.started -= instance.OnSelectSlot6;
             @SelectSlot6.performed -= instance.OnSelectSlot6;
             @SelectSlot6.canceled -= instance.OnSelectSlot6;
+            @Mode.started -= instance.OnMode;
+            @Mode.performed -= instance.OnMode;
+            @Mode.canceled -= instance.OnMode;
         }
 
         /// <summary>
@@ -1746,6 +1778,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSelectSlot6(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Mode" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMode(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

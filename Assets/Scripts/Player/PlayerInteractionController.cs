@@ -6,15 +6,18 @@ public class PlayerInteractionController : MonoBehaviour {
     public static event Action OnInteractionZoneExited;
     
     private IInteractable _interactableInRange;
+    private bool _canInteractWithItems = true;
 
     private void OnEnable() {
         InputController.OnInteract += Interact;
         InputController.OnItemSelected += OnKeyPressed;
+        GameStateController.MuseumOpened += OnMuseumOpened;
     }
 
     private void OnDisable() {
         InputController.OnInteract -= Interact;
         InputController.OnItemSelected -= OnKeyPressed;
+        GameStateController.MuseumOpened -= OnMuseumOpened;
     }
 
     /// <summary>
@@ -36,11 +39,18 @@ public class PlayerInteractionController : MonoBehaviour {
         OnInteractionZoneExited?.Invoke();
     }
 
+    private void OnMuseumOpened() {
+        _canInteractWithItems = false;
+    }
+
     /// <summary>
     /// Attempts to interact with the current interactable in range.
     /// Delegates all state and availability checks to the interactable itself via CanBeInteracted().
     /// </summary>
     private void Interact() {
+        if (!_canInteractWithItems)
+            return;
+        
         if (_interactableInRange == null)
             return;
 
@@ -51,6 +61,9 @@ public class PlayerInteractionController : MonoBehaviour {
     }
 
     private void OnKeyPressed(int index) {
+        if (!_canInteractWithItems)
+            return;
+        
         if (_interactableInRange == null)
             return;
 

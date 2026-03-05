@@ -10,6 +10,7 @@ public class InputController : PersistentSingleton<InputController> {
     public static event Action OnDash;
     public static event Action OnInteract;
     public static event Action<int> OnItemSelected;
+    public static event Action ChangeMode;
     
     private Action<InputAction.CallbackContext>[] _slotCallbacks;
     
@@ -25,6 +26,7 @@ public class InputController : PersistentSingleton<InputController> {
 
         _inputActions.Player.Interact.performed += OnInteractPerformed;
         _inputActions.Player.Dash.performed += OnDashPerformed;
+        _inputActions.Player.Mode.performed += OnModePerformed;
         
         var slotActions = new[] {
             _inputActions.Player.SelectSlot1,
@@ -49,6 +51,7 @@ public class InputController : PersistentSingleton<InputController> {
         
         _inputActions.Player.Interact.performed -= OnInteractPerformed;
         _inputActions.Player.Dash.performed -= OnDashPerformed;
+        _inputActions.Player.Mode.performed -= OnModePerformed;
         
         var slotActions = new[] {
             _inputActions.Player.SelectSlot1,
@@ -75,6 +78,10 @@ public class InputController : PersistentSingleton<InputController> {
     
     private void OnDashPerformed(InputAction.CallbackContext ctx) {
         OnDash?.Invoke();
+    }
+
+    private void OnModePerformed(InputAction.CallbackContext ctx) {
+        ChangeMode?.Invoke();
     }
 
     /// <summary>
