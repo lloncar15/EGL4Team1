@@ -12,7 +12,7 @@ public enum VisitorState {
 
 public class Visitor : MonoBehaviour { 
     [SerializeField] private VisitorState state;
-    [SerializeField] private float luck;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     
     [Header("Standing Time")]
     [SerializeField] public Vector2 standTimeRange = new(2f, 5f);
@@ -35,9 +35,12 @@ public class Visitor : MonoBehaviour {
 
     public void Init(List<Transform> spots, Transform exit, BloodType setType) {
         _agent = GetComponent<NavMeshAgent>();
+        _agent.updateRotation = false;
+        
         _exitPoint = exit;
         
         _bloodType = setType;
+        spriteRenderer.color = setType.color;
         
         // shuffle the spots
         _artifactSpots = new List<Transform>(spots);
