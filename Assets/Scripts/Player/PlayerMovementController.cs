@@ -6,9 +6,11 @@ using UnityEngine.InputSystem;
 public class PlayerMovementController : MonoBehaviour {
     [Header("Movement Settings")]
     [SerializeField] private PlayerMovementSettings settings;
-    
-    [Header("References")]
-    [SerializeField] private SpriteRenderer renderer;
+
+    [Header("References")] 
+    [SerializeField] private TrailRenderer dashTrail;
+
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     private PlayerInputActions _inputActions;
     private Vector2 _moveInput;
@@ -75,6 +77,7 @@ public class PlayerMovementController : MonoBehaviour {
     private IEnumerator DashCoroutine() {
         _isDashing = true;
         _dashOnCooldown = true;
+        dashTrail.emitting = true;
         
         Vector3 dashDirection = new(_lastMoveDirection.x, 0f, _lastMoveDirection.y);
         _rb.linearVelocity = dashDirection * settings.dashSpeed;
@@ -82,6 +85,7 @@ public class PlayerMovementController : MonoBehaviour {
         yield return _waitDashDuration;
 
         _isDashing = false;
+        dashTrail.emitting = false;
         _rb.linearVelocity = Vector3.zero;
 
         yield return _waitDashCooldown;
@@ -93,13 +97,13 @@ public class PlayerMovementController : MonoBehaviour {
     #region Sprite
 
     private void UpdateSpriteDirection() {
-        if (!renderer)
+        if (!spriteRenderer)
             return;
         
         if (_lastMoveDirection.x > 0.01f)
-            renderer.flipX = false;
+            spriteRenderer.flipX = true;
         else if (_lastMoveDirection.x < -0.01f)
-            renderer.flipX = true;
+            spriteRenderer.flipX = false;
     }
 
     #endregion
