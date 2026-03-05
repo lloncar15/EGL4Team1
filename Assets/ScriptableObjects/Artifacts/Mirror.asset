@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d2096a9bbb564982ab1deb5a66bc2be2, type: 3}
-  m_Name: Artifact1
+  m_Name: Mirror
   m_EditorClassIdentifier: Assembly-CSharp::Artifact
-  itemName: Artifact 1
-  icon: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  color: {r: 1, g: 0, b: 0, a: 1}
-  itemDescription: 
+  itemName: Mirror
+  icon: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+  color: {r: 0, g: 0, b: 0, a: 0}
+  itemDescription: The Main artifact
   appeal: 0
   someStat: 0
   someStat2: 0

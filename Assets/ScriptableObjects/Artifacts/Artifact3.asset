@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Artifact3
   m_EditorClassIdentifier: Assembly-CSharp::Artifact
   itemName: Artifact 3
-  icon: {fileID: 1400620334, guid: 91b8a53ab6d654b7683ee0a5a1f789d6, type: 3}
+  icon: {fileID: -9095717837082945937, guid: bd3cb4af8406d4436a2ae8c2aafe1f8d, type: 3}
+  color: {r: 0, g: 0.16342616, b: 1, a: 1}
   itemDescription: 
   appeal: 0
   someStat: 0

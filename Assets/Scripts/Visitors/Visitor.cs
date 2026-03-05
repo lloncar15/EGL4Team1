@@ -27,13 +27,13 @@ public class Visitor : MonoBehaviour {
 
     private Transform _exitPoint;
 
-    private List<Transform> _artifactSpots = new();
+    private List<InteractableArtifactHolder> _artifactSpots = new();
     private int _currentSpotIndex = 0;
     private float _standTimer;
     
     private const float DISTANCE_CHECK = 0.2f;
 
-    public void Init(List<Transform> spots, Transform exit, BloodType setType) {
+    public void Init(List<InteractableArtifactHolder> spots, Transform exit, BloodType setType) {
         _agent = GetComponent<NavMeshAgent>();
         _agent.updateRotation = false;
         
@@ -43,7 +43,7 @@ public class Visitor : MonoBehaviour {
         spriteRenderer.color = setType.color;
         
         // shuffle the spots
-        _artifactSpots = new List<Transform>(spots);
+        _artifactSpots = new List<InteractableArtifactHolder>(spots);
         Shuffle(_artifactSpots);
         
         // get random speed
@@ -90,19 +90,29 @@ public class Visitor : MonoBehaviour {
     }
 
     private void GoToNextSpot() {
-        _agent.isStopped = false;
+        while (true) {
+            _agent.isStopped = false;
 
-        if (_currentSpotIndex >= _artifactSpots.Count) {
-            GoToExit();
-            return;
+            if (_currentSpotIndex >= _artifactSpots.Count) {
+                GoToExit();
+                return;
+            }
+
+            InteractableArtifactHolder artifactSpot = _artifactSpots[_currentSpotIndex];
+            _currentSpotIndex++;
+
+            if (!artifactSpot.HoldsAnArtifact) {
+                continue;
+            }
+
+            List<Transform> standingSpots = artifactSpot.standingTransforms;
+            Transform target = standingSpots[Random.Range(0, standingSpots.Count)];
+
+            _agent.SetDestination(target.position);
+
+            state = VisitorState.Walking;
+            break;
         }
-
-        Transform target = _artifactSpots[_currentSpotIndex];
-        _currentSpotIndex++;
-        
-        _agent.SetDestination(target.position);
-        
-        state = VisitorState.Walking;
     }
 
     private void GoToExit() {

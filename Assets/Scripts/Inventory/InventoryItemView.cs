@@ -6,5 +6,6 @@ public class InventoryItemView : MonoBehaviour {
 
     public void Initialize(Item item) {
         itemImage.sprite = item.icon;
+        itemImage.color = item.color;
     }
 }
