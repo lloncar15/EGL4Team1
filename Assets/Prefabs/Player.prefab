@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 6284735798718532629}
   - component: {fileID: 2515900595021950649}
   - component: {fileID: 2577200201696432803}
+  - component: {fileID: 6992789752855883663}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -322,3 +323,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0.2, y: 0.5, z: 0}
+--- !u!114 &6992789752855883663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7678187861899334770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615965fd9d7744ca89c4216b60f1b71a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAbilityController
+  visitorLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  gameStateController: {fileID: 0}
+  move: {fileID: 4297013033992329140}
+  abilityRange: 3
+  targetingAngle: 0.6

@@ -20,6 +20,8 @@ public class PlayerMovementController : MonoBehaviour {
     private WaitForSeconds _waitDashDuration;
     private WaitForSeconds _waitDashCooldown;
 
+    public Vector3 FacingDirection => new Vector3(_lastMoveDirection.x, 0, _lastMoveDirection.y);
+    
     private void Awake() {
         _rb = GetComponent<Rigidbody>();
         

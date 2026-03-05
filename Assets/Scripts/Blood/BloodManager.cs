@@ -6,6 +6,8 @@ public class BloodManager : GenericSingleton<BloodManager> {
     [SerializeField] private int maxDrains = 5;
     [SerializeField] public List<BloodType> collectedBlood = new();
 
+    public bool HasCollectedBlood => collectedBlood.Count >= maxDrains;
+    
     public void AddBlood(BloodType bloodType) {
         if (collectedBlood.Count >= maxDrains)
             return;

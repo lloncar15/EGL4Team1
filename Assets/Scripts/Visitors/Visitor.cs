@@ -13,6 +13,7 @@ public enum VisitorState {
 public class Visitor : MonoBehaviour { 
     [SerializeField] private VisitorState state;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private GameObject mesmerizedTear;
     
     [Header("Standing Time")]
     [SerializeField] public Vector2 standTimeRange = new(2f, 5f);
@@ -30,7 +31,9 @@ public class Visitor : MonoBehaviour {
     private List<InteractableArtifactHolder> _artifactSpots = new();
     private int _currentSpotIndex = 0;
     private float _standTimer;
-    
+    private float _mesmerizedTimer;
+
+    private const float MESMERIZE_DURATION = 2f;
     private const float DISTANCE_CHECK = 0.2f;
 
     public void Init(List<InteractableArtifactHolder> spots, Transform exit, BloodType setType) {
@@ -69,6 +72,14 @@ public class Visitor : MonoBehaviour {
             }
             case VisitorState.GoToExit: {
                 CheckExitArrival();
+                break;
+            }
+            case VisitorState.Mesmerized: {
+                _mesmerizedTimer -= Time.deltaTime;
+                if (_mesmerizedTimer <= 0) {
+                    mesmerizedTear.SetActive(false);
+                    _agent.isStopped = false;
+                }
                 break;
             }
         }
@@ -129,21 +140,26 @@ public class Visitor : MonoBehaviour {
     }
 
     public void Mesmerize() {
-        if (state == VisitorState.Drained || state == VisitorState.GoToExit)
+        if (state is VisitorState.Drained or VisitorState.GoToExit)
             return;
         
         state = VisitorState.Mesmerized;
         _agent.isStopped = true;
-        
-        //TODO: show mesmerized on the unit
+        _mesmerizedTimer = MESMERIZE_DURATION;
+        mesmerizedTear.SetActive(true);
     }
 
     public void Drain() {
         if (state != VisitorState.Mesmerized)
             return;
+
+        BloodManager manager = BloodManager.Instance;
+        if (manager.HasCollectedBlood)
+            return;
         
+        mesmerizedTear.SetActive(false);
         state = VisitorState.Drained;
-        BloodManager.Instance.AddBlood(_bloodType);
+        manager.AddBlood(_bloodType);
         
         GoToExit();
     }

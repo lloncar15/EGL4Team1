@@ -3,7 +3,7 @@ using UnityEngine;
 #pragma warning disable CS0414 // Field is assigned but its value is never used
 
 public class GameStateController : MonoBehaviour {
-    [SerializeField] private GameState currentGameState = GameState.Placement;
+    [SerializeField] public GameState currentGameState = GameState.Placement;
 
     public static event Action MuseumOpened;
     
@@ -16,7 +16,7 @@ public class GameStateController : MonoBehaviour {
     }
 
     private void ChangeMode() {
-        currentGameState = GameState.Placement;
+        currentGameState = GameState.Opened;
         MuseumOpened?.Invoke();
         InputController.ChangeMode -= ChangeMode;
     }
