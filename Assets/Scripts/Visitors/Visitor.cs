@@ -10,8 +10,7 @@ public enum VisitorState {
     GoToExit
 }
 
-public class Visitor : MonoBehaviour {
-    [SerializeField] private BloodType bloodType;
+public class Visitor : MonoBehaviour { 
     [SerializeField] private VisitorState state;
     [SerializeField] private float luck;
     
@@ -23,6 +22,8 @@ public class Visitor : MonoBehaviour {
     [SerializeField]public Vector2 speedRange = new(1f, 3.5f);
     
     private NavMeshAgent _agent;
+    
+    private BloodType _bloodType;
 
     private Transform _exitPoint;
 
@@ -32,9 +33,11 @@ public class Visitor : MonoBehaviour {
     
     private const float DISTANCE_CHECK = 0.2f;
 
-    public void Init(List<Transform> spots, Transform exit) {
+    public void Init(List<Transform> spots, Transform exit, BloodType setType) {
         _agent = GetComponent<NavMeshAgent>();
         _exitPoint = exit;
+        
+        _bloodType = setType;
         
         // shuffle the spots
         _artifactSpots = new List<Transform>(spots);
@@ -127,7 +130,7 @@ public class Visitor : MonoBehaviour {
             return;
         
         state = VisitorState.Drained;
-        BloodManager.Instance.AddBlood(bloodType);
+        BloodManager.Instance.AddBlood(_bloodType);
         
         GoToExit();
     }
