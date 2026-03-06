@@ -45,6 +45,8 @@ public class Visitor : MonoBehaviour {
     private ResearchRoom _researchRoom;
     private int _researchSpotIndex;
 
+    private bool _isConverted;
+
     private const float MESMERIZE_DURATION = 2f;
     private const float DISTANCE_CHECK = 0.2f;
 
@@ -87,8 +89,15 @@ public class Visitor : MonoBehaviour {
             
             case VisitorState.Standing: {
                 _standTimer -= Time.deltaTime;
+
                 if (_standTimer <= 0)
-                    GoToNextSpot();
+                {
+                    if (_isConverted)
+                        GoToNextResearchSpot();
+                    else
+                        GoToNextSpot();
+                }
+
                 break;
             }
             
@@ -117,9 +126,10 @@ public class Visitor : MonoBehaviour {
             return;
 
         if (state == VisitorState.WalkingVampire) {
-            GoToNextResearchSpot();
+            StartStanding(); // stand at research station
+            return;
         }
-        
+
         StartStanding();
     }
 
@@ -190,6 +200,7 @@ public class Visitor : MonoBehaviour {
         mesmerizedTear.SetActive(false);
         state = VisitorState.Drained;
         manager.AddBlood(_bloodType);
+        _isConverted = true;
         
         GoToAResearchRoom();
     }
