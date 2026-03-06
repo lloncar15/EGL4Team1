@@ -76,6 +76,8 @@ public class Visitor : MonoBehaviour {
     }
 
     private void Update() {
+        UpdateFacing();
+        
         switch (state) {
             case VisitorState.Walking: {
                 CheckArrival();
@@ -114,6 +116,15 @@ public class Visitor : MonoBehaviour {
                 }
                 break;
             }
+        }
+    }
+    
+    private void UpdateFacing() {
+        Vector3 velocity = _agent.velocity;
+
+        if (Mathf.Abs(velocity.x) > 0.05f)
+        {
+            spriteRenderer.flipX = velocity.x > 0;
         }
     }
 
