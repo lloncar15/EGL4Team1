@@ -1457,7 +1457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e226620f00a88448f9e848ff03163fa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceManager
-  money: 0
+  money: 1067
   artifacts:
   - {fileID: 1928509561}
   - {fileID: 1853266312}

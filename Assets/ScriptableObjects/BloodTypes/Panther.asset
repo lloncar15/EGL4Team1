@@ -15,4 +15,4 @@ MonoBehaviour:
   bloodName: Goblin
   isGroupie: 0
   buff: {fileID: 11400000, guid: 880362f59dc294bfb87b025d73172f3a, type: 2}
-  color: {r: 0.16862746, g: 0.8392157, b: 0.23093969, a: 1}
+  color: {r: 0.7254902, g: 0.6117647, b: 0.42745098, a: 1}

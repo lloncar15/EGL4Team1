@@ -15,4 +15,4 @@ MonoBehaviour:
   bloodName: Hunter
   isGroupie: 0
   buff: {fileID: 11400000, guid: ca1eb9bc0e8f24ca685e741026045438, type: 2}
-  color: {r: 0.8392157, g: 0.16862746, b: 0.24130827, a: 1}
+  color: {r: 0.7254902, g: 0.6117647, b: 0.42745098, a: 1}

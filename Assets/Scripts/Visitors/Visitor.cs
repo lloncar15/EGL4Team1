@@ -9,7 +9,8 @@ public enum VisitorState {
     Mesmerized,
     Drained,
     Standing,
-    GoToExit
+    GoToExit,
+    WalkingVampire
 }
 
 public class Visitor : MonoBehaviour { 
@@ -40,6 +41,9 @@ public class Visitor : MonoBehaviour {
     private float _mesmerizedTimer;
 
     public static event Action<int> TicketPaid;
+    
+    private ResearchRoom _researchRoom;
+    private int _researchSpotIndex;
 
     private const float MESMERIZE_DURATION = 2f;
     private const float DISTANCE_CHECK = 0.2f;
@@ -75,16 +79,24 @@ public class Visitor : MonoBehaviour {
                 CheckArrival();
                 break;
             }
+            
+            case VisitorState.WalkingVampire: {
+                CheckArrival();
+                break;
+            }
+            
             case VisitorState.Standing: {
                 _standTimer -= Time.deltaTime;
                 if (_standTimer <= 0)
                     GoToNextSpot();
                 break;
             }
+            
             case VisitorState.GoToExit: {
                 CheckExitArrival();
                 break;
             }
+            
             case VisitorState.Mesmerized: {
                 _mesmerizedTimer -= Time.deltaTime;
                 if (_mesmerizedTimer <= 0) {
@@ -101,8 +113,14 @@ public class Visitor : MonoBehaviour {
     }
 
     private void CheckArrival() {
-        if (HasArrivedOnSpot())
-            StartStanding();
+        if (!HasArrivedOnSpot())
+            return;
+
+        if (state == VisitorState.WalkingVampire) {
+            GoToNextResearchSpot();
+        }
+        
+        StartStanding();
     }
 
     private void StartStanding() {
@@ -151,7 +169,7 @@ public class Visitor : MonoBehaviour {
     }
 
     public void Mesmerize() {
-        if (state is VisitorState.Drained or VisitorState.GoToExit)
+        if (state is VisitorState.Drained or VisitorState.WalkingVampire)
             return;
         
         state = VisitorState.Mesmerized;
@@ -167,12 +185,45 @@ public class Visitor : MonoBehaviour {
         BloodManager manager = BloodManager.Instance;
         if (manager.HasCollectedBlood)
             return;
-        
+
+        spriteRenderer.color = Color.darkRed;
         mesmerizedTear.SetActive(false);
         state = VisitorState.Drained;
         manager.AddBlood(_bloodType);
         
-        GoToExit();
+        GoToAResearchRoom();
+    }
+
+    private void GoToAResearchRoom() {
+        ResearchRoom room = FindAnyObjectByType<ResearchRoom>();
+
+        if (!room) {
+            GoToExit();
+            return;
+        }
+        
+        _researchRoom = room;
+        _researchSpotIndex = 0;
+
+        GoToNextResearchSpot();
+    }
+    
+    private void GoToNextResearchSpot() {
+        if (!_researchRoom || _researchRoom.standingSpots.Count == 0) {
+            GoToExit();
+            return;
+        }
+
+        Transform target = _researchRoom.standingSpots[_researchSpotIndex];
+        _researchSpotIndex++;
+
+        if (_researchSpotIndex >= _researchRoom.standingSpots.Count)
+            _researchSpotIndex = 0;
+
+        _agent.isStopped = false;
+        _agent.SetDestination(target.position);
+
+        state = VisitorState.WalkingVampire;
     }
     
     void Shuffle<T>(List<T> list)
