@@ -17,6 +17,13 @@ public class InteractableArtifactHolder : InteractableSprite {
             _holdsAnArtifact = true;
             return;
         }
+
+        if (item) {
+            _holdsAnArtifact = true;
+            itemImage.sprite = item.icon;
+            itemImage.color = item.color;
+            return;
+        }
         
         if (defaultSprite) {
             itemImage.sprite = defaultSprite;

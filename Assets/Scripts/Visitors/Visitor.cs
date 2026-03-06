@@ -122,7 +122,7 @@ public class Visitor : MonoBehaviour {
     private void UpdateFacing() {
         Vector3 velocity = _agent.velocity;
 
-        if (Mathf.Abs(velocity.x) > 0.05f)
+        if (Mathf.Abs(velocity.x) > 0.1f)
         {
             spriteRenderer.flipX = velocity.x > 0;
         }
