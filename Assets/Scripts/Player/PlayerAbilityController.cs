@@ -2,9 +2,11 @@ using System;
 using UnityEngine;
 
 public class PlayerAbilityController : MonoBehaviour {
+    private static readonly int Attack = Animator.StringToHash("Attack");
     [SerializeField] private LayerMask visitorLayer;
     [SerializeField] private GameStateController gameStateController;
     [SerializeField] private PlayerMovementController move;
+    [SerializeField] private Animator animator;
 
     [SerializeField] private float abilityRange = 3f;
     [SerializeField] private float targetingAngle = 0.6f;
@@ -38,16 +40,20 @@ public class PlayerAbilityController : MonoBehaviour {
 
     private void TryMesmerize() {
         Visitor visitor = GetClosestVisitorInFront();
-        
-        if (visitor)
+
+        if (visitor) {
             visitor.Mesmerize();
+            animator.SetTrigger(Attack);
+        }
     }
 
     private void TryDrain() {
         Visitor visitor = GetClosestVisitorInFront();
-        
-        if (visitor)
+
+        if (visitor) {
             visitor.Drain();
+            animator.SetTrigger(Attack);
+        }
     }
 
     private Visitor GetClosestVisitorInFront() {

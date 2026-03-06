@@ -4,4 +4,5 @@ using UnityEngine;
 public class RoomBlueprint : ScriptableObject {
     public string roomName;
     public string roomDescription;
+    public int price;
 }

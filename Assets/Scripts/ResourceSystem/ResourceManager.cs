@@ -25,6 +25,11 @@ public class ResourceManager : GenericSingleton<ResourceManager> {
         MoneyChanged?.Invoke();
     }
 
+    public void RemoveMoney(int amount) {
+        money -= amount;
+        MoneyChanged?.Invoke();
+    }
+
     private void CalculateMoneyModifier() {
         foreach (InteractableArtifactHolder artifactHolder in artifacts) {
             if (!artifactHolder.HoldsAnArtifact)

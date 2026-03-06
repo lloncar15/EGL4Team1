@@ -97,9 +97,9 @@ public class PlayerMovementController : MonoBehaviour {
             return;
         
         if (_lastMoveDirection.x > 0.01f)
-            spriteRenderer.flipX = true;
-        else if (_lastMoveDirection.x < -0.01f)
             spriteRenderer.flipX = false;
+        else if (_lastMoveDirection.x < -0.01f)
+            spriteRenderer.flipX = true;
     }
 
     #endregion
