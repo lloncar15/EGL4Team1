@@ -17,5 +17,5 @@ MonoBehaviour:
   color: {r: 0, g: 0, b: 0, a: 0}
   itemDescription: The Main artifact
   appeal: 0
-  someStat: 0
+  moneyModifier: 20
   someStat2: 0

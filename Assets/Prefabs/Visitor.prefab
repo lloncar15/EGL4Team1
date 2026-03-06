@@ -236,6 +236,8 @@ MonoBehaviour:
   mesmerizedTear: {fileID: 2837175079509066745}
   standTimeRange: {x: 2, y: 5}
   speedRange: {x: 2, y: 4.5}
+  minMoney: 20
+  maxMoney: 50
 --- !u!65 &5081418999551993291
 BoxCollider:
   m_ObjectHideFlags: 0

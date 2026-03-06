@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public enum VisitorState {
     Walking,
@@ -21,6 +23,10 @@ public class Visitor : MonoBehaviour {
 
     [Header("Speed")]
     [SerializeField]public Vector2 speedRange = new(1f, 3.5f);
+
+    [Header("Money")] 
+    [SerializeField] public int minMoney = 100;
+    [SerializeField] public int maxMoney = 250;
     
     private NavMeshAgent _agent;
     
@@ -32,6 +38,8 @@ public class Visitor : MonoBehaviour {
     private int _currentSpotIndex = 0;
     private float _standTimer;
     private float _mesmerizedTimer;
+
+    public static event Action<int> TicketPaid;
 
     private const float MESMERIZE_DURATION = 2f;
     private const float DISTANCE_CHECK = 0.2f;
@@ -54,6 +62,9 @@ public class Visitor : MonoBehaviour {
         
         // get random standing time
         _standTime = Random.Range(standTimeRange.x, standTimeRange.y);
+        
+        int amount = Random.Range(minMoney, maxMoney);
+        TicketPaid?.Invoke(amount);
         
         GoToNextSpot();
     }

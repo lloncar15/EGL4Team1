@@ -17,5 +17,5 @@ MonoBehaviour:
   color: {r: 0.5566038, g: 0.52436787, b: 0.29142934, a: 1}
   itemDescription: 
   appeal: 0
-  someStat: 0
+  moneyModifier: 100
   someStat2: 0

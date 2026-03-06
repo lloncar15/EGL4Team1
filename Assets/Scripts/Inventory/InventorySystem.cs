@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InventorySystem :MonoBehaviour {
-    [SerializeField] public List<Item> items = new();
+    [SerializeField] public List<Artifact> items = new();
 
-    public static event Action<Item> OnItemAdded;
+    public static event Action<Artifact> OnItemAdded;
     public static event Action<int> OnItemRemoved;
     public static event Action UpdateItems;
 
-    public List<Item> Items => items;
+    public List<Artifact> Items => items;
 
     private void Start() {
         UpdateItems?.Invoke();
     }
 
-    public void AddItem(Item newItem) {
+    public void AddItem(Artifact newItem) {
         items.Add(newItem);
         OnItemAdded?.Invoke(newItem);
     }
@@ -25,7 +25,7 @@ public class InventorySystem :MonoBehaviour {
         OnItemRemoved?.Invoke(itemIndex);
     }
     
-    public Item GetItem(int itemIndex) {
+    public Artifact GetItem(int itemIndex) {
         return items[itemIndex];
     }
 

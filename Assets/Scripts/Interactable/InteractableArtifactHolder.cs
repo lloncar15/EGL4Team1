@@ -4,7 +4,7 @@ using UnityEngine;
 public class InteractableArtifactHolder : InteractableSprite {
     [SerializeField] private SpriteRenderer itemImage;
     [SerializeField] private Sprite defaultSprite;
-    [SerializeField] private Item item;
+    [SerializeField] public Artifact item;
     [SerializeField] private InventorySystem inventory;
     [SerializeField] public List<Transform> standingTransforms;
     [SerializeField] public bool isMainArtifact;
@@ -39,7 +39,7 @@ public class InteractableArtifactHolder : InteractableSprite {
         _holdsAnArtifact = false;
     }
 
-    private void AddItem(Item newItem) {
+    private void AddItem(Artifact newItem) {
         item = newItem;
         itemImage.sprite = item.icon;
         itemImage.color = newItem.color;
