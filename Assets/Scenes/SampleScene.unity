@@ -872,6 +872,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2515900595021950649, guid: 02b4901d75f5e4766b8d3ffbfdbe8546, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 1780809866}
     - target: {fileID: 3113469125935658857, guid: 02b4901d75f5e4766b8d3ffbfdbe8546, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1880,6 +1884,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 22fdeedafca5b41a5adc5f7d9b564b68, type: 2}
   - {fileID: 11400000, guid: eb6b2141641304032b5453f188a7f8dc, type: 2}
   - {fileID: 11400000, guid: 39412a652a089442fadc511edec49254, type: 2}
+  - {fileID: 11400000, guid: e3c10f7c002344eeea3bc7a22cae14c2, type: 2}
+  - {fileID: 11400000, guid: 22fdeedafca5b41a5adc5f7d9b564b68, type: 2}
   - {fileID: 11400000, guid: d8428c14674c84c7881ba4746872d537, type: 2}
 --- !u!4 &256331906
 Transform:

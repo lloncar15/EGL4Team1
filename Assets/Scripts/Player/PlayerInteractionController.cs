@@ -2,8 +2,11 @@ using System;
 using UnityEngine;
 
 public class PlayerInteractionController : MonoBehaviour {
+    private static readonly int Attack = Animator.StringToHash("Attack");
     public static event Action OnInteractionZoneEntered;
     public static event Action OnInteractionZoneExited;
+    
+    public Animator animator;
     
     private IInteractable _interactableInRange;
     private bool _canInteractWithItems = true;
@@ -48,6 +51,8 @@ public class PlayerInteractionController : MonoBehaviour {
     /// Delegates all state and availability checks to the interactable itself via CanBeInteracted().
     /// </summary>
     private void Interact() {
+        animator.SetTrigger(Attack);
+        
         if (!_canInteractWithItems)
             return;
         
@@ -61,6 +66,8 @@ public class PlayerInteractionController : MonoBehaviour {
     }
 
     private void OnKeyPressed(int index) {
+        animator.SetTrigger(Attack);
+        
         if (!_canInteractWithItems)
             return;
         
